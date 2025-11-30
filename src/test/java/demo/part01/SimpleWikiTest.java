@@ -3,8 +3,8 @@ package demo.part01;
 import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.Test;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
+
 public class SimpleWikiTest {
     @Test
     void test01() {
@@ -15,6 +15,8 @@ public class SimpleWikiTest {
     void test02() {
         open("https://ru.wikipedia.org/wiki/Selenium");
         $("body").shouldHave(text("Selenide"));
+
+        sleep(2000);
     }
     @Test
     void test03() {
