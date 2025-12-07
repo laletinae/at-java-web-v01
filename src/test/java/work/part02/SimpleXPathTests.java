@@ -10,6 +10,6 @@ public class SimpleXPathTests {
     void testPageH1() {
         open("https://slqamsk.github.io/cases/slflights/v01/");
 
-        $x("h1");
+        $x("//h1");
     }
 }
