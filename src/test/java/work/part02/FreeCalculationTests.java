@@ -18,7 +18,7 @@ public class FreeCalculationTests {
 
         //By byBtnSum = By.id("sum");
         SelenideElement fieldSum = Selenide.element(By.name("sum"));
-        SelenideElement btnCount = Selenide.element(By.name("submit"));
+        SelenideElement btnCount = $("input[name=sum]");
 
         fieldSum.sendKeys("1234");
         btnCount.click();
