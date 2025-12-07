@@ -31,7 +31,7 @@ public class DomSimpleLocators {
         $(By.linkText("Регистрация нового пользователя в системе")).shouldBe(visible);
 
         $(By.partialLinkText("длинный")).shouldBe(visible);
-        $(By.partialLinkText("Контакты545")).shouldBe(visible);
+        $(By.partialLinkText("Контакты")).shouldBe(visible);
 
     }
 }
