@@ -4,6 +4,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -17,7 +18,7 @@ public class SimpleXPathTests {
         $header.shouldHave(text("Учебная страница для XPath"));
 
         //Варивант 2
-        $x("//h1").shouldHave(text("Учебная страница для XPath"));
+        $x("//h1").shouldHave(exactText("Учебная страница для XPath"));
 
 
     }
