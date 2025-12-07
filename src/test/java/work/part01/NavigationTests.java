@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class NavigationTests {
     @Test
-    void test_navigation() {
+    void testNavigation() {
         Configuration.browser = "firefox";
 
         open("https://google.com");
