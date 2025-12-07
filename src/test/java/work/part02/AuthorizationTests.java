@@ -20,8 +20,8 @@ public class AuthorizationTests {
 
         SelenideElement menuMessage = $("span[id=greeting]");
 
-        fieldLogin.type("standard_user");
-        fieldPassword.type("stand_pass1");
+        fieldLogin.setValue("standard_user");
+        fieldPassword.setValue("stand_pass1");
 
         btnLogin.click();
 
@@ -41,8 +41,8 @@ public class AuthorizationTests {
 
         SelenideElement welcomeMessage = $("div[id=message]");
 
-        fieldLogin.type("standard_user");
-        fieldPassword.type("stand_pass1_wrong");
+        fieldLogin.setValue("standard_user");
+        fieldPassword.setValue("stand_pass1_wrong");
 
         btnLogin.click();
 
@@ -63,8 +63,8 @@ public class AuthorizationTests {
         SelenideElement welcomeMessage = $("form[id=form-logon1] div ul li");
 
 
-        fieldLogin.type("standard_user");
-        fieldPassword.type("stand_pass1_wrong");
+        fieldLogin.setValue("standard_user");
+        fieldPassword.setValue("stand_pass1_wrong");
 
         btnLogin.click();
 
