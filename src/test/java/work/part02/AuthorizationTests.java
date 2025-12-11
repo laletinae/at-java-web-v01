@@ -102,26 +102,4 @@ public class AuthorizationTests {
 
         sleep(1000);
     }
-
-    @Test
-    public void testLoginSpecialist() {
-        open("https://www.specialist.ru/account/logon");
-
-
-        SelenideElement fieldLogin = $("input[id=Email1]");
-        SelenideElement fieldPassword = $("input[id=Password]");
-        SelenideElement btnLogin = $("button.submit-button");
-
-        SelenideElement welcomeMessage = $("form[id=form-logon1] div ul li");
-
-
-        fieldLogin.setValue("standard_user");
-        fieldPassword.setValue("stand_pass1_wrong");
-
-        btnLogin.click();
-
-        welcomeMessage.shouldHave(text("Почта, номер телефона или пароль не верны."));
-
-        sleep(1000);
-    }
 }

@@ -10,8 +10,9 @@ import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
-
-public class AuthorizationSpecialistTests {
+//@SuppressWarnings({"Connection reset","Unable to find CDP implementation matching 143"})
+//Обычно методы вызываются случайным образом. Аннотация TestMethodOrder позволяет запускать в порядке, отсортированном по имени класса
+@TestMethodOrder(MethodOrderer.MethodName.class) public class AuthorizationSpecialistTests {
 
     //Поиск элементов по CSS-селектору
     SelenideElement fieldLogin = $("input[id=Email1]");
