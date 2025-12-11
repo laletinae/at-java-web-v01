@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
 
-public class AuthorizationTestsSpecialist {
+public class AuthorizationSpecialistTests {
 
     //Поиск элементов по CSS-селектору
     SelenideElement fieldLogin = $("input[id=Email1]");
