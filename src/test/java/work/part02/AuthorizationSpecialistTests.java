@@ -10,9 +10,21 @@ import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
-//@SuppressWarnings({"Connection reset","Unable to find CDP implementation matching 143"})
-//Обычно методы вызываются случайным образом. Аннотация TestMethodOrder позволяет запускать в порядке, отсортированном по имени класса
-@TestMethodOrder(MethodOrderer.MethodName.class) public class AuthorizationSpecialistTests {
+/**
+ * Пример проверки формы авторизации на сайте Специалист
+ * 1) ввод неверных данных
+ * 2) попытка отправить форму с пустфми полями
+ * Реализован выбор браузера случайным образом
+ * Браузер открывается перед каждым тестом (BeforeEach) и закрывается после каждого теста (AfterEach)
+ * Использование аннотации DisplayName и TestMethodOrder
+ *
+ */
+
+//Обычно методы вызываются случайным образом. Аннотация TestMethodOrder позволяет запускать в порядке,
+// отсортированном по имени класса
+@TestMethodOrder(MethodOrderer.MethodName.class)
+
+public class AuthorizationSpecialistTests {
 
     //Поиск элементов по CSS-селектору
     SelenideElement fieldLogin = $("input[id=Email1]");
@@ -60,15 +72,14 @@ import static com.codeborne.selenide.Selenide.*;
     /**
      * Пример запуска кода после каждого теста
      * Написать название теста, который закончил выполнение
-     * Закруть выбранный случайным образом браузер
+     * Закрыть выбранный случайным образом браузер
      *
      */
     @AfterEach
     void printTestNameEnd(TestInfo test_info) {
-        System.out.println("Тест " + test_info.getDisplayName() + " - закончили.");
 
         closeWindow();
-
+        System.out.println("Тест " + test_info.getDisplayName() + " - закончили.");
     }
 
     /**
@@ -107,6 +118,8 @@ import static com.codeborne.selenide.Selenide.*;
 
         //При пустом вводе форма не отправляется (кнопка не должна кликаться) - т.к. поле required
         //Как это проверить?? Это корректная проверка?
+        //Сообщение об ошибке не должно существовать
+
         errorMessage.shouldNot(exist);
 
         sleep(500);

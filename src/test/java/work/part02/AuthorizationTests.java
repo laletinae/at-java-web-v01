@@ -100,6 +100,6 @@ public class AuthorizationTests {
         //При НЕверном вводе логина и пароля - сообщение под формой ввода должно быть такое:
         welcomeMessage.shouldHave(text("Неверное имя пользователя или пароль."));
 
-        sleep(1000);
+        sleep(500);
     }
 }
