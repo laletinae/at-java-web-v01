@@ -8,7 +8,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
-@TestMethodOrder(MethodOrderer.MethodName.class)
+//@TestMethodOrder(MethodOrderer.MethodName.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("Тестовый набор FourthLoginTests - проверка аутентификации")
 public class FifthLoginTests {
     @BeforeAll
@@ -40,8 +41,9 @@ public class FifthLoginTests {
     //12. Проверить вход в систему под несколькими разными логинами
     //В тестовой модели удалить тест-кейс 12, перенести в тест-кейс 01.
     @ParameterizedTest (name = "01. Успешный вход в систему по кнопке Login под разными логинами, #{index}, username: {0}")
+    //@ParameterizedTest()
     @ValueSource (strings = {"standard_user", "problem_user", "performance_glitch_user", "error_user", "visual_user"})
-    void test01_success_login_button(String username) {
+    void test01SuccessLoginButton(String username) {
         $("#username").sendKeys(username);
         $("#password").sendKeys("secret_sauce");
         $("#loginButton").click();
@@ -68,6 +70,8 @@ public class FifthLoginTests {
     @Test
     @DisplayName("03. Корректные логин и пароль - успешный вход в систему по нажатию клавиши Enter на клавиатуре")
     @Tag("SmokeTest")
+    @Order(1)
+    @Disabled
     void test03_success_login_enter() {
         $("#username").sendKeys("standard_user");
         $("#password").sendKeys("secret_sauce");
@@ -113,6 +117,7 @@ public class FifthLoginTests {
     //Реализовано в версии 04 - user06/user06_password
     @Test
     @DisplayName("06. Корректный логин, пароль от другого корректного логина - ошибка")
+    @Order(2)
     void test06_login_and_password_not_matched() {
         open("https://slqa.ru/cases/ChatGPTLogin/");
         $("#username").sendKeys("user06");
@@ -127,6 +132,7 @@ public class FifthLoginTests {
 
     @Test
     @DisplayName("07. Проверить, что под заблокированным пользователем нельзя войти в систему")
+    @Order(2)
     void test07_error_blocked_user() {
         $("#username").sendKeys("locked_out_user");
         $("#password").sendKeys("secret_sauce");

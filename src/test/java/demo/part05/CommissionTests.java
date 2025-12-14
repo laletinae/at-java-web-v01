@@ -2,10 +2,9 @@ package demo.part05;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
-import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class CommissionTests {
@@ -21,13 +20,12 @@ public class CommissionTests {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "com_test.csv", numLinesToSkip=1)
+    @CsvFileSource(resources = "com_test_01.csv", numLinesToSkip=1)
     void test02Positive(String sum, String com) {
         open("https://slqa.ru/cases/fc/v01/");
         $x("//input[@name='sum']").setValue(sum);
         $x("//input[@type='submit']").click();
-        $x("//span[@name='com']").shouldHave(text(com));
-
+        $x("//span[@name='com']").shouldHave(exactText(com));
     }
 
 }

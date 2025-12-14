@@ -13,6 +13,10 @@ public class SimpleFlightsTests {
         getWebDriver().manage().window().maximize();
     }
 
+
+
+
+
     //Автотесты
     // 1. Неуспешный логин
     @Test
