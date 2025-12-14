@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Расчёт стоимости билета в кино</title>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Расчёт стоимости билета в кино</h1>
+    </header>
+    <div class="content">
+        <form id="ticketForm">
+            <div class="input-group">
+                <label for="age">Возраст посетителя (полных лет):</label>
+                <input type="number" id="age" name="age" min="0" max="130">
+            </div>
+
+            <div class="buttons">
+                <button type="submit" class="btn submit-btn">Рассчитать</button>
+                <button type="reset" class="btn reset-btn">Сбросить</button>
+            </div>
+
+            <div class="result-container hidden">
+                <div>Стоимость билета:</div>
+                <div id="result" class="result"></div>
+                <div id="error" class="error"></div>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <a href="../..">Список версий</a>
+    </footer>
+</div>
+</body>
+</html>

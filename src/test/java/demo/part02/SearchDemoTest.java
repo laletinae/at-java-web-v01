@@ -13,8 +13,8 @@ public class SearchDemoTest {
 
         By myLocator = By.id("submit-button");
         SelenideElement myElement = Selenide.element(myLocator);
+        myElement.shouldBe(visible);
         myElement.shouldBe(Condition.visible);
-
         element(By.id("submit-button")).shouldBe(visible);
         $(By.id("submit-button")).shouldBe(visible);
 
