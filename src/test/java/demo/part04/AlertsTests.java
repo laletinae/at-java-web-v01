@@ -3,6 +3,9 @@ package demo.part04;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Alert;
+
+import java.time.Duration;
+
 import static com.codeborne.selenide.Selenide.*;
 public class AlertsTests {
     @Test
@@ -11,8 +14,12 @@ public class AlertsTests {
         open("https://practice-automation.com/popups/");
         $("#alert").click();
         sleep(2_000);
-        switchTo().alert().accept();
+        switchTo()
+                .alert()
+                .accept();
         sleep(2_000);
+        switchTo().defaultContent();
+        $x("//a[text()='Home']").click();
     }
     @Test
     void test02ConfirmOk() {

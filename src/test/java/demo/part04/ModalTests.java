@@ -12,11 +12,20 @@ public class ModalTests {
         open("https://practice-automation.com/modals/");
         $x("//div[@id='popmake-1318']").shouldBe(exist);
         $("#simpleModal").click();
-        sleep(2_000);
-        $x("//a[text()='Home']").click();
-        $x("//div[@id='popmake-1318']").shouldBe(visible);
+        sleep(1000);
+        $x("//div[@id='popmake-1318']//button")
+                .shouldBe(visible)
+                .shouldBe(clickable)
+                .click();
+
+        $x("//div[@id='popmake-1318']//button").shouldBe(visible);
         $x("//div[@id='popmake-1318']//button").shouldBe(clickable);
         $x("//div[@id='popmake-1318']//button").click();
+
+
+
+        sleep(2_000);
+        $x("//a[text()='Home']").click();
         sleep(2_000);
     }
 }

@@ -12,11 +12,13 @@ public class NewWindowTests {
     void test01NewWindow() {
         Configuration.pageLoadStrategy = "eager";
         open("https://practice-automation.com/");
+
         getWebDriver().manage().window().setSize(new Dimension(1000, 1000));
         getWebDriver().manage().window().setPosition(new Point(0, 0));
         sleep(2_000);
         switchTo().newWindow(WindowType.WINDOW);
         open("https://demoqa.com/");
+
         getWebDriver().manage().window().setSize(new Dimension(1000, 1000));
         getWebDriver().manage().window().setPosition(new Point(1020, 0));
         sleep(2_000);

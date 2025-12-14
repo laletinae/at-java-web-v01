@@ -67,6 +67,7 @@ public class FifthLoginTests {
 
     @Test
     @DisplayName("03. Корректные логин и пароль - успешный вход в систему по нажатию клавиши Enter на клавиатуре")
+    @Tag("SmokeTest")
     void test03_success_login_enter() {
         $("#username").sendKeys("standard_user");
         $("#password").sendKeys("secret_sauce");
@@ -80,6 +81,7 @@ public class FifthLoginTests {
 
     @Test
     @DisplayName("04. Выход из системы")
+    @Tag("SmokeTest")
     void test04_logout_success() {
         $("#username").sendKeys("standard_user");
         $("#password").sendKeys("secret_sauce");
