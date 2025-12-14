@@ -36,6 +36,13 @@ public class IFramesTests {
         $x("//a[text()='Home']").click();
         sleep(10_000);
     }
+
+    /*
+     * Задание:
+     * Напишите тест, который на странице https://demoqa.com/frames
+     * Перейти к iFrame и убедится, что на ней есть заголовок h1, у которого текст "This is a sample page"
+     * Вернуться в исходный фрейм и перейти по ссылке
+     */
     @Test
     void test02IFrame() {
         //Configuration.pageLoadTimeout = 120_000;
@@ -45,10 +52,19 @@ public class IFramesTests {
         getWebDriver().manage().window().maximize();
 
 
+
+        //Элемент, находящийся внутри iframe можно найти при помощи devtools
+        // Но нельзя при помощи xPath, будет ошибка что элемент не найден, если не сделать switchTo().frame
+        // Ошибка возникнет в момент инициализации (когда что-то будем с ним делать, например shouldHave).
+        // Просто при объявлении локатора - ошибки не будет (ленивая инициализация)
         switchTo().frame($x("//iframe[@id='frame1']"));
 
         $x("//h1[@id='sampleHeading']").shouldHave(text("This is a sample page"));
 
-        sleep(1000);
+        //Вернуться в исходный фрейм и перейти по ссылке
+        switchTo().defaultContent();
+        $x("//header/a").click();
+
+        sleep(3000);
     }
 }

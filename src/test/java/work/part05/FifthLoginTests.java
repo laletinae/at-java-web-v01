@@ -1,4 +1,4 @@
-package demo.part05;
+package work.part05;
 
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.*;
@@ -6,9 +6,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
-@TestMethodOrder(MethodOrderer.MethodName.class)
+//@TestMethodOrder(MethodOrderer.MethodName.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("Тестовый набор FourthLoginTests - проверка аутентификации")
 public class FifthLoginTests {
     @BeforeAll
@@ -127,6 +129,7 @@ public class FifthLoginTests {
 
     @Test
     @DisplayName("07. Проверить, что под заблокированным пользователем нельзя войти в систему")
+    @Disabled
     void test07_error_blocked_user() {
         $("#username").sendKeys("locked_out_user");
         $("#password").sendKeys("secret_sauce");
@@ -140,6 +143,7 @@ public class FifthLoginTests {
 
     @Test
     @DisplayName("08. Пустой логин, пароль от корректного логина")
+    @Order(3)
     void test08_empty_login_correct_password() {
         $("#password").sendKeys("secret_sauce");
         $("#loginButton").click();
@@ -164,6 +168,7 @@ public class FifthLoginTests {
 
     @Test
     @DisplayName("10. Пустые логин и пароль")
+    @Order(2)
     void test10_error_empty_login_and_password() {
         $("#loginButton").click();
         $("#message").shouldHave(text("Username and Password are required."));
@@ -181,6 +186,7 @@ public class FifthLoginTests {
     //Требуется выполнять эту проверку ручным способом.
     @Test
     @DisplayName("11. Проверить, что при вводе пароль скрыт за звёздочками - проверка не полноценная, повторить вручную!!!")
+    @Order(1)
     void test11_asterisks_in_password() {
         $("#password").type("secret_sauce");
         $("#password").shouldHave(attribute("type","password"));

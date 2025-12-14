@@ -1,13 +1,17 @@
-package work.part02;
+package work.part05;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
 /**
@@ -16,16 +20,14 @@ import static com.codeborne.selenide.Selenide.*;
  * и BeforeAll, BeforeEach, AfterEach
  *
  */
-public class AuthorizationParameterizedTests {
+public class ComissionParameterizedTests {
 
     //Поиск элементов по CSS-селектору
-    SelenideElement fieldLogin = $("input[id=username]");
-    SelenideElement fieldPassword = $("input[id=password]");
-    SelenideElement btnLogin = $("button[id=loginButton]");
-    SelenideElement menuMessage = $("span[id=greeting]"); //Сообщение на панели верхнего меню
-    SelenideElement welcomeMessage = $("div[id=message]");  //Сообщение под формой входа
+    SelenideElement summa = $x("//input[@name='sum']");
+    SelenideElement button = $x("//input[@name='submit']");
+    SelenideElement comission = $x("//span[@name='com']");
 
-    static String pageUrl = "https://slqamsk.github.io/cases/slflights/v01/";
+    static String pageUrl = "https://slqa.ru/cases/fc/v01/";
     /**
      * Пример запуска кода перед всеми тестами (например, выбор браузера и открытие страницы)
      *
@@ -60,71 +62,55 @@ public class AuthorizationParameterizedTests {
 
 
     /**
-     * Источник данных для параметризованного теста: логин, пароль и ФИО для каждого пользователя
-     * Проверяются только существующие пользователи, с правильным паролем
+     * Задание:
+     * Для формы расчёта комиссии https://slqa.ru/cases/fc/v01/
+     * сделайте параметризованный тест, который ничего не будет проверять и передаст значения:
+     * 100
+     * 2000
+     * "йцукен"
+     * ============================================================
+     * #{index}  - порядковый номер итерации
+     * {0} значение 1-го (нумерация с нуля) параметра
+     * В тесте с ValueSource только 1 параметр
      *
      */
-    @ParameterizedTest (name = "01. Успешный вход в систему, #{index}, username: {0}")
-    @CsvSource({
-            "standard_user, stand_pass1, 'Иванов Иван Иванович'",
-            "problem_user, prob_pass3, 'Сидорова Анна Владимировна'",
-            "error_user, erro_pass5, 'Смирнова Елена Александровна'",
-            "performance_glitch_user, perf_pass4, 'Кузнецов Дмитрий Сергеевич'",
-            "visual_user, visu_pass6, 'Федоров Алексей Николаевич'"
-    })
-    public void test01LoginSuccess(String username, String password, String fio) {
+    @ParameterizedTest (name = "Расчёт комиссии, #{index}, параметр: {0}")
+    @ValueSource (strings = {"100","2000","йцукен"})
 
-        fieldLogin.setValue(username);
-        fieldPassword.setValue(password);
-        btnLogin.click();
-
-        //При верном вводе логина и пароля - сообщение в панели меню должно быть такое:
-        menuMessage.shouldHave(text("Добро пожаловать, " + fio + "!"));
+    public void test01Comission(String summValue) {
+        summa.setValue(summValue);
+        button.click();
 
         sleep(500);
 
     }
 
     /**
-     * Источник данных для параметризованного теста: логин, пароль и ФИО для каждого пользователя
-     * Проверяются заблокированные пользователи, с правильным паролем
-     *
+     * Задание:
+     * Для формы расчёта комиссии https://slqa.ru/cases/fc/v01/
+     * сделайте параметризованный тест, который работает с csv файлом в качестве источника данных
+     * и проверяет, верно ли рассчитана комиссия
+     * ============================================================
+     * numLinesToSkip - Начиная с какой строки (пропускаем названия столбцов)
+     * {0} значение 1-го (нумерация с нуля) параметра
+     * {1} значение 2-го (нумерация с нуля) параметра
+     * В тесте с CsvFileSource и CsvSource это номер столбца с данными
      */
-    @ParameterizedTest (name = "02. Заблокированный пользователь, #{index}, username: {0}")
-    @CsvSource({
-            "locked_out_user, lock_pass2, 'Петров Петр Петрович'"
-    })
-    public void test02LoginBlocked(String username, String password, String fio) {
+    @ParameterizedTest (name = "Расчёт комиссии, #{index}, сумма: {0} комиссия: {1}")
+    @CsvFileSource(resources = "com_test.csv", numLinesToSkip = 1)
 
-        fieldLogin.setValue(username);
-        fieldPassword.setValue(password);
-        btnLogin.click();
+    public void test02Comission(String summValue, String commValue) {
+        summa.setValue(summValue);
+        button.click();
 
-        //Для заблокированного пользователя - сообщение под формой ввода должно быть такое:
-        welcomeMessage.shouldHave(text("Пользователь заблокирован."));
+        //Проверим сумму комиссии
+        comission.shouldBe(text(commValue));
+
+        System.out.println("Сумма = " + summValue + ", комиссия = " + commValue);
+
 
         sleep(500);
+
     }
 
-    /**
-     * Источник данных для параметризованного теста: логин, пароль и ФИО для каждого пользователя
-     * Проверяются заблокированные пользователи, с правильным паролем
-     *
-     */
-    @ParameterizedTest (name = "03. Неверный логин или пароль, #{index}, username: {0}")
-    @CsvSource({
-            "standard_user, stand_pass_wrong, 'Иванов Иван Иванович'",
-            "locked_out_user, lock_pass_wrong, 'Петров Петр Петрович'"
-    })
-    public void test03LoginWrongPassword(String username, String password, String fio) {
-
-        fieldLogin.setValue(username);
-        fieldPassword.setValue(password);
-        btnLogin.click();
-
-        //При НЕверном вводе логина и пароля - сообщение под формой ввода должно быть такое:
-        welcomeMessage.shouldHave(text("Неверное имя пользователя или пароль."));
-
-        sleep(500);
-    }
 }
