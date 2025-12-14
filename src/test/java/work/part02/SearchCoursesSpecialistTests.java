@@ -33,11 +33,22 @@ public class SearchCoursesSpecialistTests {
     static void openPage(TestInfo test_info) {
         Configuration.browser = "firefox";
 
+        //Увеличение времени ожидания открытия страницы (не помогло)
+        //driver = getWebDriver();
+        //driver.manage().timeouts().pageLoadTimeout(160, java.util.concurrent.TimeUnit.SECONDS); //этот способ не использовать
+
+        //Неявные ожидания (лучше использовать явные ожидания)
+        Configuration.pageLoadTimeout = 30_000; //время загрузки страницы - использовать этот метод
+        Configuration.pageLoadStrategy = "eager"; //жадная загрузка (не дожидаясь подгрузки всех ресурсов)
+
+        //лучше использовать явные ожидания, слайд 55 - попробовать
+        // $("#dynamic_content").shouldBe(exist, Duration.ofSeconds(6));
+
         open(pageUrl);
 
-        //Увеличение времени ожидания открытия страницы (не помогло)
-        driver = getWebDriver();
-        driver.manage().timeouts().pageLoadTimeout(160, java.util.concurrent.TimeUnit.SECONDS);
+
+
+
 
         System.out.println("Страница " + pageUrl + "открыта");
     }
