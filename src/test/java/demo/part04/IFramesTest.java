@@ -1,6 +1,9 @@
 package demo.part04;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.Test;
+
+
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
@@ -11,9 +14,10 @@ public class IFramesTest {
         Configuration.pageLoadStrategy = "eager";
 
         open("https://practice-automation.com/iframes/");
+        sleep(3_000);
         getWebDriver().manage().window().maximize();
 
-        $x("//*[@class='wp-block-spacer'][2]").scrollTo(); //для демонстрации
+        //$x("//*[@class='wp-block-spacer'][2]").scrollTo(); //для демонстрации
         sleep(5_000);
         switchTo().frame($x("//div[@class='entry-content']/iframe[@id='iframe-2']"));
         $x("//a[contains(.,'About')]").click();
@@ -26,5 +30,18 @@ public class IFramesTest {
         sleep(5_000);
         $x("//a[text()='Home']").click();
         sleep(10_000);
+    }
+
+    @Test
+    void test02IFrame() {
+        Configuration.pageLoadStrategy = "eager";
+        open("https://demoqa.com/frames");
+        sleep(3000);
+        getWebDriver().manage().window().maximize();
+        switchTo().frame($x("//iframe[@id='frame1']"));
+        $("#sampleHeading").shouldHave(text("This is a sample page"));
+        switchTo().defaultContent();
+        $x("//header/a").click();
+        sleep(3000);
     }
 }

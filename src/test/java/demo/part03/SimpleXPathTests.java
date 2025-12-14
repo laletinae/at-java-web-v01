@@ -13,7 +13,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class SimpleXPathTests {
     @BeforeAll
     static void beforeAll() {
-        Configuration.pageLoadTimeout = 30_000;
+        //Configuration.pageLoadTimeout = 30_000;
         Configuration.pageLoadStrategy = "eager";
     }
 
