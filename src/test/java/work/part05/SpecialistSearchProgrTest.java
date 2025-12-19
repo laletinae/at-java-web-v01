@@ -2,6 +2,9 @@ package work.part05;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.Step;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
@@ -10,6 +13,7 @@ import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static io.qameta.allure.Allure.step;
 
 /*
  Домашнее задание на 21 декабря, обязательная часть
@@ -27,20 +31,30 @@ public class SpecialistSearchProgrTest {
         Configuration.browser = "firefox";
         open("https://www.specialist.ru/");
         getWebDriver().manage().window().maximize();
+        SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
     @Test
+    @Step("Поиск форматов обучения")
     void searchCourse() {
         //Принять cookie
         $("#cookieConsent__ok").click();
 
         //Пункт верхнего меню
-        SelenideElement $menuFormat = $x("//div[@id='js-mobile-menu']//a[contains(text(),'Форматы обучения')]");
-        $menuFormat.click();
+        step("Выбираем пункт верхнего меню форматы обучения", () ->
+        {
+            SelenideElement $menuFormat = $x("//div[@id='js-mobile-menu']//a[contains(text(),'Форматы обучения')]");
+            $menuFormat.click();
+        }
+        );
 
         //Формат "свободное обучение"
+        step("Выбираем формат обучения свободное ПО", () ->
+        {
         SelenideElement $linkSvobodnoe = $x("//article[@class='format-article']//a[contains(text(),'Свободное обучение')]");
         $linkSvobodnoe.click();
+        }
+        );
 
         //Кнопка "Выбрать курс"
         SelenideElement $buttonChoose = $x("//a[@href='#selectCourse']");
