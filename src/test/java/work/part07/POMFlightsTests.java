@@ -1,6 +1,8 @@
 package work.part07;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import work.part07.pages.FlightsListPage;
 import work.part07.pages.LoginPage;
 import work.part07.pages.RegistrationPage;
@@ -8,8 +10,7 @@ import work.part07.pages.SearchPage;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 
@@ -104,9 +105,18 @@ public class POMFlightsTests {
         registrationPage.isErrorFillAllFied();
     }
 
+    // 6. Успешный логин под разными пользователями.
+    @ParameterizedTest
+    @CsvFileSource(resources = "logins.csv")
+    void test06MuliLogin(String userName, String passWord, String fio) {
+        demo.part07.pages.LoginPage lp = new demo.part07.pages.LoginPage();
+        lp.login(userName,passWord);
+        lp.isLoginSuccessful(fio);
+        sleep(5000);
+    }
     // Напишите автотест для теста: "Убедиться, что при попытке найти рейс для даты в прошлом отображается ошибка"
     @Test
-    void test06DateInPast() {
+    void test07DateInPast() {
         // Страница логина
         LoginPage loginPage = new LoginPage();
         loginPage.login("standard_user", "stand_pass1");
@@ -121,7 +131,7 @@ public class POMFlightsTests {
     // Поиск - не найдены рейсы - возврат на страницу поиска - найдены рейсы -
     // Регистрация на 1-й рейс в списке - не задан номер паспорта - повторный ввод паспорта с корректными данными - успешная регистрация.
     @Test
-    void test06ComplicatedSearch() {
+    void test08ComplicatedSearch() {
         // Страница логина
         LoginPage loginPage = new LoginPage();
         loginPage.login("standard_user", "stand_pass1");
