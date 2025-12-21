@@ -20,13 +20,6 @@ public class RegistrationPage {
         message = $("#registrationMessage");
 
 
-    @Step("Проверка, что данные рейса корректные")
-    public void isFlightDataCorrect(String cityFrom, String cityTo) {
-        flightInfo
-                .shouldBe(visible)
-                .shouldHave(text(cityFrom + " → " + cityTo));
-    }
-
     @Step("Успешная регистрация со значениями по умолчанию")
     public void successDefaultRegistration() {
         buttonFinishRegistration.click();
@@ -43,6 +36,13 @@ public class RegistrationPage {
         this.email.setValue(email);
         this.phone.setValue(phone);
         buttonFinishRegistration.click();
+    }
+
+    @Step("Проверка, что данные рейса корректные")
+    public void isFlightDataCorrect(String cityFrom, String cityTo) {
+        flightInfo
+                .shouldBe(visible)
+                .shouldHave(text(cityFrom + " → " + cityTo));
     }
 
     @Step("Появилась ошибка Заполните все поля")

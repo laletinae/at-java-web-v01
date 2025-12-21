@@ -53,9 +53,9 @@ public class SimpleFlightsTests {
         $("#username").setValue("standard_user");
         $("#password").setValue("stand_pass1");
         $("#loginButton").click();
-        $("#greeting").shouldHave(text("Добро пожаловать, Иванов Иван Иванович!"));
 
         //Страница поиска
+        $("#greeting").shouldHave(text("Добро пожаловать, Иванов Иван Иванович!"));
         $("#departureCity").selectOption("Казань");
         $("#arrivalCity").selectOption("Париж");
         $("#departureDate").setValue("16.03.2026");
@@ -96,12 +96,13 @@ public class SimpleFlightsTests {
         $("#username").setValue("standard_user");
         $("#password").setValue("stand_pass1");
         $("#loginButton").click();
-        $("#greeting").shouldHave(text("Добро пожаловать, Иванов Иван Иванович!"));
 
         //Страница поиска
+        $("#greeting").shouldHave(text("Добро пожаловать, Иванов Иван Иванович!"));
         $("#departureCity").selectOption("Москва");
         $("#arrivalCity").selectOption("Нью-Йорк");
-        $("#departureDate").setValue("16.03.2026");
+        $("#departureDate").setValue("16.03.2026"); // Для Chrome и остальных браузеров
+        //$("#departureDate").setValue("2026-03-16"); // Для Firefox
         $x("//button[.='Найти']").click();
 
         //Страница списка рейсов

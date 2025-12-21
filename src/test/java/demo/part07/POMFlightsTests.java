@@ -1,7 +1,10 @@
 package demo.part07;
 
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import demo.part07.pages.FlightsListPage;
 import demo.part07.pages.LoginPage;
@@ -9,6 +12,8 @@ import demo.part07.pages.RegistrationPage;
 import demo.part07.pages.SearchPage;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 
 @TestMethodOrder(MethodOrderer.DisplayName.class)
@@ -16,6 +21,7 @@ public class POMFlightsTests {
     @BeforeAll
     static void beforeAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
+        Configuration.browser = "firefox";
     }
 
     @BeforeEach
@@ -27,9 +33,9 @@ public class POMFlightsTests {
     // 1. Неуспешный логин
     @Test
     void test01WrongPassword() {
-        LoginPage loginPage = new LoginPage();
-        loginPage.login("standard_user", "WrongPassword");
-        loginPage.isLoginUnsuccessful();
+        LoginPage myLoginPage = new LoginPage();
+        myLoginPage.login("standard_user", "WrongPassword");
+        myLoginPage.isLoginUnsuccessful();
     }
 
     // 2. Не задана дата
@@ -100,5 +106,15 @@ public class POMFlightsTests {
         registrationPage.isFlightDataCorrect("Москва", "Нью-Йорк");
         registrationPage.registration("", "", "", "");
         registrationPage.isErrorFillAllFied();
+    }
+
+    // 6. Успешный логин под разными пользователями.
+    @ParameterizedTest
+    @CsvFileSource (resources = "logins.csv")
+    void test06MuliLogin(String userName, String passWord, String fio) {
+        LoginPage lp = new LoginPage();
+        lp.login(userName,passWord);
+        lp.isLoginSuccessful(fio);
+        sleep(5000);
     }
 }
