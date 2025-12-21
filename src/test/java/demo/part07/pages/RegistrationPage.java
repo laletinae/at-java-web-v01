@@ -1,4 +1,4 @@
-package pages;
+package demo.part07.pages;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;

@@ -1,21 +1,27 @@
+package demo.part07;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.Alert;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class SimpleFlightsTests {
+
+    @BeforeAll
+    static void beforeAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
 
     @BeforeEach
     void setUp() {
-        open("https://slqa.ru/cases/DeepSeekFlights/");
+        open("https://slqamsk.github.io/cases/slflights/v01/");
         getWebDriver().manage().window().maximize();
     }
-
-
-
-
 
     //Автотесты
     // 1. Неуспешный логин
@@ -52,7 +58,7 @@ public class SimpleFlightsTests {
         //Страница поиска
         $("#departureCity").selectOption("Казань");
         $("#arrivalCity").selectOption("Париж");
-        $("#departureDate").setValue("24.11.2025");
+        $("#departureDate").setValue("16.03.2026");
         $x("//button[.='Найти']").click();
 
         //Страница списка рейсов
@@ -71,7 +77,7 @@ public class SimpleFlightsTests {
         //Страница поиска
         $("#departureCity").selectOption("Москва");
         $("#arrivalCity").selectOption("Нью-Йорк");
-        $("#departureDate").setValue("24.11.2025");
+        $("#departureDate").setValue("16.03.2026");
         $x("//button[.='Найти']").click();
 
         //Страница списка рейсов
@@ -95,7 +101,7 @@ public class SimpleFlightsTests {
         //Страница поиска
         $("#departureCity").selectOption("Москва");
         $("#arrivalCity").selectOption("Нью-Йорк");
-        $("#departureDate").setValue("24.11.2025");
+        $("#departureDate").setValue("16.03.2026");
         $x("//button[.='Найти']").click();
 
         //Страница списка рейсов

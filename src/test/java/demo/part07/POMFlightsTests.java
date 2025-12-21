@@ -1,15 +1,15 @@
-package demo.part05;
+package demo.part07;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import org.junit.jupiter.api.*;
-import pages.FlightsListPage;
-import pages.LoginPage;
-import pages.RegistrationPage;
-import pages.SearchPage;
-// ... Остальные импорты
 import com.codeborne.selenide.logevents.SelenideLogger;
+import demo.part07.pages.FlightsListPage;
+import demo.part07.pages.LoginPage;
+import demo.part07.pages.RegistrationPage;
+import demo.part07.pages.SearchPage;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
+
 
 @TestMethodOrder(MethodOrderer.DisplayName.class)
 public class POMFlightsTests {
@@ -51,7 +51,7 @@ public class POMFlightsTests {
         loginPage.isLoginSuccessful("Иванов Иван Иванович");
 
         SearchPage searchPage = new SearchPage();
-        searchPage.search("24.11.2025", "Казань", "Париж");
+        searchPage.search("16.03.2026", "Казань", "Париж");
 
         FlightsListPage flightsList = new FlightsListPage();
         flightsList.isNoFlights();
@@ -67,7 +67,7 @@ public class POMFlightsTests {
 
         // Страница поиска рейсов
         SearchPage searchPage = new SearchPage();
-        searchPage.search("30.12.2025", "Москва", "Нью-Йорк");
+        searchPage.search("16.03.2026", "Москва", "Нью-Йорк");
 
         // Страница со списком найденных рейсов
         FlightsListPage flightsList = new FlightsListPage();
@@ -89,7 +89,7 @@ public class POMFlightsTests {
 
         // Страница поиска рейсов
         SearchPage searchPage = new SearchPage();
-        searchPage.search("30.12.2025", "Москва", "Нью-Йорк");
+        searchPage.search("16.03.2026", "Москва", "Нью-Йорк");
 
         // Страница со списком найденных рейсов
         FlightsListPage flightsList = new FlightsListPage();
