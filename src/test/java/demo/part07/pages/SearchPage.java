@@ -36,6 +36,11 @@ public class SearchPage {
         this.message.shouldHave(text("Пожалуйста, укажите дату вылета."));
     }
 
+    @Step("Проверка, что дата в прошлом")
+    public void isDateInPast(){
+        this.message.shouldHave(text("Невозможно осуществить поиск: выбранная дата уже прошла."));
+    }
+
     private String makeDateCorrect(String date) {
         //Передаём дату в формате DD.MM.YYYY
         if (Configuration.browser == "firefox" && date != null && date.length() == 10) {

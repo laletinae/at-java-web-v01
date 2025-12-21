@@ -20,8 +20,8 @@ public class RegistrationPage {
         message = $("#registrationMessage");
 
 
-    @Step("Успешная регистрация со значениями по умолчанию")
-    public void successDefaultRegistration() {
+    @Step("Успешная регистрация")
+    public void successRegistration() {
         buttonFinishRegistration.click();
         Alert alert= switchTo().alert();
         assertTrue(alert.getText().contains("Бронирование завершено"));
@@ -49,4 +49,5 @@ public class RegistrationPage {
     public void isErrorFillAllFied() {
         this.message.shouldHave(text("Пожалуйста, заполните все поля."));
     }
+
 }
