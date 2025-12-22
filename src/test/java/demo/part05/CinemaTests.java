@@ -13,6 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.openqa.selenium.By;
 
 import java.util.stream.Stream;
 
@@ -22,7 +23,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class CinemaTests {
     @BeforeEach
     void setUp() {
-        Configuration.browser = "firefox";
+        Configuration.browser = "chrome";
     }
 
     @Test
@@ -30,10 +31,14 @@ public class CinemaTests {
 
         open("http://92.51.36.108:7777/sl.qa/cinema/index.php");
         $("input[name=age]").setValue("35");
-        //String dateValue = "16.12.2025"; // Дата в формате YYYY-MM-DD
-        String dateValue = "2025-12-16"; // Дата в формате YYYY-MM-DD
+        String dateValue = "23.12.2025"; // Дата в формате YYYY-MM-DD
+        //String dateValue = "2025-12-23"; // Дата в формате YYYY-MM-DD
         $("input[name='date']").setValue(dateValue);
-        $("input[name=session][value='3']").click();
+        $x("//input[@name='session' and @value='1']").click();
+        sleep(3_000);
+        $(By.name("session")).selectRadio("3");
+        sleep(3_000);
+
         $("input[name=film][value=crime]").click();
         $("input[type=submit").click();
         $("div").shouldHave(text("Стоимость билета: 350 рублей."));

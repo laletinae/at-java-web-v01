@@ -1,4 +1,4 @@
-package pages;
+package demo.part07.pages;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -20,15 +20,8 @@ public class RegistrationPage {
         message = $("#registrationMessage");
 
 
-    @Step("Проверка, что данные рейса корректные")
-    public void isFlightDataCorrect(String cityFrom, String cityTo) {
-        flightInfo
-                .shouldBe(visible)
-                .shouldHave(text(cityFrom + " → " + cityTo));
-    }
-
-    @Step("Успешная регистрация со значениями по умолчанию")
-    public void successDefaultRegistration() {
+    @Step("Успешная регистрация")
+    public void successRegistration() {
         buttonFinishRegistration.click();
         Alert alert= switchTo().alert();
         assertTrue(alert.getText().contains("Бронирование завершено"));
@@ -45,8 +38,16 @@ public class RegistrationPage {
         buttonFinishRegistration.click();
     }
 
+    @Step("Проверка, что данные рейса корректные")
+    public void isFlightDataCorrect(String cityFrom, String cityTo) {
+        flightInfo
+                .shouldBe(visible)
+                .shouldHave(text(cityFrom + " → " + cityTo));
+    }
+
     @Step("Появилась ошибка Заполните все поля")
     public void isErrorFillAllFied() {
         this.message.shouldHave(text("Пожалуйста, заполните все поля."));
     }
+
 }
