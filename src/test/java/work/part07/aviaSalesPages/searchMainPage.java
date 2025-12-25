@@ -12,50 +12,45 @@ public class searchMainPage {
     SelenideElement
         fromField = $("#avia_form_origin-input"),
         toField = $("#avia_form_destination-input"),
-        searchTo = $("#search-destination-input"),
         findButton = $x("//form[@data-test-id='avia-form']//button[@data-test-id='form-submit']"),
-        startDate = $x("//form[@data-test-id='avia-form']//button[@data-test-id='start-date-field']"),
+        startDateField = $x("//form[@data-test-id='avia-form']//button[@data-test-id='start-date-field']"),
         //startDate = $x("//form[@data-test-id='avia-form']//button[@data-test-id='departure-calendar-icon']"),
-        startDateInModal = $x("//div[@id='avs-modal-container']//button[@data-test-id='start-date-field']"),
+        //startDateInModal = $x("//div[@id='avs-modal-container']//button[@data-test-id='start-date-field']"),
 
-        //выпадающий список направлений, Сочи
-        destSochi = $x("//ul[@id='avia_form_destination-menu']//li[contains(.,'Сочи')]"),
-        //ul id avia_form_destination-menu
+        //выпадающий список направлений
+        destinationMenu = $x("//ul[@id='avia_form_destination-menu']"),
 
-    //li id avia_form_destination-item-4 contains text Сочи
+        //выпадающая таблица с выбором дат
+        dropDownDatesTable = $x("//div[@data-test-id='dropdown']");
 
+        //firstFoundDestination = $x("//li[@id='avia_form_destination-item-0']"),
+        //modal = $("#avs-modal-container");
 
-        day12012026 = $x("//td[@data-day='2026-01-12']"),
-        //listToSochi = $x("//ul[@id='avia_form_destination-menu']//"),
-        firstFoundDestination = $x("//li[@id='avia_form_destination-item-0']"),
-        modal = $("#avs-modal-container");
-
-    @Step("Поиск рейсов (задаём только дату)")
-    public void search(String from, String to) {
+    @Step("Поиск рейсов по заданному направлению на дату")
+    public void search(String from, String to, String date) {
         this.fromField.clear();
         this.fromField.setValue(from);
 
-        //Поле куда
-        //this.toField.clear();
+        //Поле куда (развернуть список для выбора)
         this.toField.click();
-        this.destSochi.click();
 
-        //sleep(1500000);
+        //Выбираем направление (поиск по названию) из выпадающего списка
+        SelenideElement destination = destinationMenu.$x("./li[contains(.,'" + to + "')]");
+        destination.click();
 
-        //Поле "Когда" будет в модальном окне
-        this.startDate.shouldBe(visible);
-        this.startDate.shouldBe(clickable);
-        this.startDate.click();
-        //this.startDateInModal.click();
-        //this.startDate.click();
+        //Поле "Когда" нужно кликнуть чтобы появилась выпадающая таблица дат
+        this.startDateField.shouldBe(visible);
+        this.startDateField.shouldBe(clickable);
+        this.startDateField.click();
 
-
-        //this.day12012026.click();
+        //Выбор конкретной даты
+        SelenideElement startDate = dropDownDatesTable.$x(".//td[@data-day='" + date + "']");
+        startDate.click();
 
 
         this.findButton.click();
 
-        //sleep(1500000);
+        sleep(10000);
 
         //exit(1);
 
@@ -73,9 +68,4 @@ public class searchMainPage {
 
     }
 
-    @Step("Проверка что рейсы найдены")
-    public void isFound() {
-        //this.fromField.setValue(from);
-        this.findButton.click();
-    }
 }

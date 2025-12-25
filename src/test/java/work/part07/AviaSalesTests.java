@@ -6,6 +6,7 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 import work.part07.aviaSalesPages.searchMainPage;
+import work.part07.aviaSalesPages.searchResults;
 
 
 import static com.codeborne.selenide.Selenide.open;
@@ -18,7 +19,7 @@ public class AviaSalesTests {
     static void beforeAll() {
         Configuration.pageLoadTimeout = 120_000;
         Configuration.pageLoadStrategy = "eager";
-        Configuration.browser = "firefox";
+        Configuration.browser = "chrome";
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
@@ -29,12 +30,17 @@ public class AviaSalesTests {
     }
 
     // ... Автотесты
-    // 1. Неуспешный логин
+    // 1. Проверка поиск билетов Москва-Сочи на 12-01-2026
     @Test
-    void test01SearchMoscow() {
+    void test01SearchMoscowSochi12012026() {
         searchMainPage searchMainPage = new searchMainPage();
-        searchMainPage.search("Москва", "Сочи");
-        searchMainPage.isFound();
+        searchMainPage.search("Москва", "Сочи", "2026-01-12");
+        //searchMainPage.isFound();
+
+        searchResults searchResults = new searchResults();
+        sleep(10000);
+        searchResults.checkDirectTicketsExist();
+        searchResults.allFlightsPreviewsPrint();
 
         sleep(10000);
     }
