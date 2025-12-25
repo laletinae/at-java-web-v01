@@ -18,7 +18,7 @@ public class RegistrationPage {
         email = $("#email"),
         phone = $("#phone"),
         message = $("#registrationMessage"),
-        buttonReturn = $x("//button[contains(.,'Вернуться к найденным рейсам')]");;
+        buttonReturn = $x("//button[contains(.,'Вернуться к найденным рейсам')]");
 
 
 
@@ -32,7 +32,7 @@ public class RegistrationPage {
 
     @Step("Успешная регистрация со значениями по умолчанию")
     public void successDefaultRegistration() {
-        buttonFinishRegistration.click();
+        this.buttonFinishRegistration.click();
         Alert alert= switchTo().alert();
         assertTrue(alert.getText().contains("Бронирование завершено"));
         alert.accept();
@@ -45,13 +45,13 @@ public class RegistrationPage {
         this.passport.setValue(passport);
         this.email.setValue(email);
         this.phone.setValue(phone);
-        buttonFinishRegistration.click();
+        this.buttonFinishRegistration.click();
     }
 
     @Step("Заполнение полей и регистрация с ошибкой в номере паспорта")
     public void registration(String passport) {
         this.passport.setValue(passport);
-        buttonFinishRegistration.click();
+        this.buttonFinishRegistration.click();
     }
 
     @Step("Появилась ошибка Заполните все поля")
@@ -62,6 +62,38 @@ public class RegistrationPage {
     @Step("Вернуться к найденным рейсам")
     public void returnToFlights() {
         this.buttonReturn.click();
+    }
+
+    @Step("Проверка что поля по умолчанию заполнены верно")
+    public void checkDefaultFields() {
+        this.fio.shouldHave(text("Иванов Иван Иванович"));
+        this.passport.shouldHave(text("1234 567890"));
+        this.email.shouldHave(text("ivanov@example.com"));
+        this.phone.shouldHave(text("+7 (123) 456-7890"));
+    }
+
+    @Step("Проверка валидации поля ФИО")
+    public void checkFioValidation() {
+        this.fio.setValue("We are here");
+        this.buttonFinishRegistration.click();
+        this.message.shouldHave(text("ФИО должно содержать только русские буквы, пробелы и дефис."));
+        this.fio.clear();
+
+        this.fio.setValue("123");
+        this.buttonFinishRegistration.click();
+        this.message.shouldHave(text("ФИО должно содержать только русские буквы, пробелы и дефис."));
+        this.fio.clear();
+
+        this.fio.setValue("#$%");
+        this.buttonFinishRegistration.click();
+        this.message.shouldHave(text("ФИО должно содержать только русские буквы, пробелы и дефис."));
+        this.fio.clear();
+
+        this.fio.setValue("Иванов Иван Иванович6");
+        this.buttonFinishRegistration.click();
+        this.message.shouldHave(text("ФИО должно содержать только русские буквы, пробелы и дефис."));
+        this.fio.clear();
+
     }
 
 }
