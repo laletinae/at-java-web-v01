@@ -9,9 +9,12 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class searchResults {
     SelenideElement
+        newWindAdvert = $x("//div[@id='__next']"),
         directTicketsContainer = $x("//div[@data-test-id='direct-tickets-schedule-container']");
 
     ElementsCollection allFlightsPreviews = $$x("//div[@data-test-id='ticket-preview']");
+    // ElementsCollection allFlightsPreviews = $$x("//div[@id='__next']");
+
     /*search-results-items-list
     direct-tickets-schedule-container
     data-test-id
@@ -20,6 +23,10 @@ public class searchResults {
 
     @Step("Проверка что в найденных есть прямые рейсы")
     public void checkDirectTicketsExist() {
+        //Если реклама в новом окне открылась - переключаемся
+        if (this.newWindAdvert.exists()){
+            switchTo().window(1);
+        }
         this.directTicketsContainer.should(exist);
     }
 

@@ -38,10 +38,10 @@ public class AviaSalesTests {
         //searchMainPage.isFound();
 
         searchResults searchResults = new searchResults();
-        sleep(10000);
+        //sleep(100000);
         searchResults.checkDirectTicketsExist();
         searchResults.allFlightsPreviewsPrint();
 
-        sleep(10000);
+        //sleep(10000);
     }
 }
